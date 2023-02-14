@@ -1,0 +1,32 @@
+print(cont_cols)
+means_ranges = {}
+for spec in species_names:
+    per_spec_means_ranges = {}
+    df_to_test = df[df["Species"] == spec]
+    for col in cont_cols:
+        per_spec_means_ranges[col] = {
+            "mean": df_to_test[col].mean(), 
+            "min": df_to_test[col].min(), 
+            "max": df_to_test[col].max()
+        }
+    means_ranges[spec] = per_spec_means_ranges
+    print(spec + ": ")
+    for key1 in per_spec_means_ranges:
+        for key2 in per_spec_means_ranges[key1]:
+            print(per_spec_means_ranges[key1][key2])
+
+
+
+cat_cols = ["Segmented", "Flat"]
+counts = {}
+for spec in species_names:
+    per_spec_counts = {}
+    df_to_test = df[df["Species"] == spec]
+    for col in cat_cols:
+        df_temp = df_to_test[col].value_counts()
+        per_spec_counts[col] = df_temp[df_temp > 0]
+    counts[spec] = per_spec_counts
+    print(spec + ": ")
+    for key in per_spec_counts:
+        print(key + ":\n" + str(per_spec_counts[key]) + "\n")
+    print("end of " + spec + "\n")
